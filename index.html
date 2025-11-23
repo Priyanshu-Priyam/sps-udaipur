@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Udaipur Adventure - Comic Itinerary</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .comic-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .comic-title {
+            text-align: center;
+            font-size: 3em;
+            color: #ff6b6b;
+            text-shadow: 3px 3px 0 #ffd93d;
+            margin-bottom: 10px;
+            transform: rotate(-2deg);
+        }
+        
+        .comic-subtitle {
+            text-align: center;
+            font-size: 1.5em;
+            color: #4ecdc4;
+            margin-bottom: 30px;
+        }
+        
+        .day-section {
+            margin-bottom: 40px;
+            border: 4px solid #333;
+            border-radius: 15px;
+            overflow: hidden;
+            background: #fffef7;
+        }
+        
+        .day-header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            font-size: 2em;
+            text-align: center;
+            border-bottom: 4px solid #333;
+            font-weight: bold;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+        }
+        
+        .activity-panel {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            padding: 20px;
+        }
+        
+        .activity-card {
+            background: white;
+            border: 3px solid #333;
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+            box-shadow: 5px 5px 0 rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .activity-card:hover {
+            transform: rotate(-1deg) scale(1.02);
+        }
+        
+        .time-badge {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: #ffd93d;
+            color: #333;
+            padding: 8px 15px;
+            border: 3px solid #333;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1em;
+        }
+        
+        .activity-icon {
+            font-size: 3em;
+            text-align: center;
+            margin: 10px 0;
+        }
+        
+        .activity-title {
+            font-size: 1.8em;
+            color: #ff6b6b;
+            margin-bottom: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .activity-description {
+            color: #333;
+            line-height: 1.6;
+            font-size: 1.1em;
+        }
+        
+        .highlight {
+            background: #ffeaa7;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        
+        .food-section {
+            background: linear-gradient(135deg, #fa8bff 0%, #2bd2ff 90%);
+            border: 4px solid #333;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .food-title {
+            font-size: 2.5em;
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 0 rgba(0,0,0,0.3);
+        }
+        
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .food-card {
+            background: white;
+            border: 3px solid #333;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .food-emoji {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .food-name {
+            font-size: 1.3em;
+            color: #e74c3c;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .food-detail {
+            font-size: 0.9em;
+            color: #555;
+        }
+        
+        .speech-bubble {
+            background: white;
+            border: 3px solid #333;
+            border-radius: 20px;
+            padding: 15px;
+            margin: 20px 0;
+            position: relative;
+            box-shadow: 3px 3px 0 rgba(0,0,0,0.1);
+        }
+        
+        .speech-bubble:before {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 30px;
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 0px solid transparent;
+            border-top: 20px solid #333;
+        }
+        
+        .speech-bubble:after {
+            content: '';
+            position: absolute;
+            bottom: -14px;
+            left: 32px;
+            width: 0;
+            height: 0;
+            border-left: 18px solid transparent;
+            border-right: 0px solid transparent;
+            border-top: 18px solid white;
+        }
+        
+        .tip-box {
+            background: #55efc4;
+            border: 3px dashed #333;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .tip-title {
+            font-size: 1.5em;
+            color: #2d3436;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .tip-text {
+            color: #2d3436;
+            font-size: 1.1em;
+        }
+        
+        @media (max-width: 768px) {
+            .comic-title {
+                font-size: 2em;
+            }
+            .day-header {
+                font-size: 1.5em;
+            }
+            .activity-title {
+                font-size: 1.4em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="comic-container">
+        <div class="comic-title">🏰 UDAIPUR ADVENTURE! 🏰</div>
+        <div class="comic-subtitle">📅 Starting December 13th | Your Epic Journey Begins!</div>
+        
+        <!-- DAY 1 -->
+        <div class="day-section">
+            <div class="day-header">⭐ DAY 1: LAKES & PALACES EXTRAVAGANZA ⭐</div>
+            
+            <div class="activity-panel">
+                <div class="activity-card">
+                    <div class="time-badge">🌅 MORNING</div>
+                    <div class="activity-icon">🏞️🛶</div>
+                    <div class="activity-title">Gangaur & Ambrai Ghat</div>
+                    <div class="activity-description">
+                        Start your day at the <span class="highlight">sacred ghats</span> of Lake Pichola! 
+                        Watch the sun rise over the water, see locals taking holy dips, and capture the 
+                        <span class="highlight">stunning City Palace reflections</span>. Ambrai Ghat offers 
+                        the BEST photo ops with panoramic palace views! 📸✨
+                        <br><br>
+                        <strong>Pro Tip:</strong> Visit Bagore Ki Haveli museum nearby!
+                    </div>
+                </div>
+                
+                <div class="activity-card">
+                    <div class="time-badge">☀️ AFTERNOON</div>
+                    <div class="activity-icon">👑🏛️</div>
+                    <div class="activity-title">City Palace - Royal Wonderland</div>
+                    <div class="activity-description">
+                        Prepare to be AMAZED! This <span class="highlight">450-year-old palace</span> is 
+                        Rajasthan's largest palace complex! Explore the:
+                        <br>
+                        🦚 <strong>Peacock Courtyard</strong> - stunning glass mosaics<br>
+                        ✨ <strong>Mirror Palace</strong> - jaw-dropping beauty<br>
+                        🎨 <strong>Royal Museum</strong> - paintings & artifacts<br>
+                        <br>
+                        <strong>Time needed:</strong> 2-3 hours of pure royal bliss!
+                    </div>
+                </div>
+                
+                <div class="activity-card">
+                    <div class="time-badge">🌆 EVENING</div>
+                    <div class="activity-icon">🌊🌅</div>
+                    <div class="activity-title">Fateh Sagar Lake Sunset</div>
+                    <div class="activity-description">
+                        End your day at the <span class="highlight">"Second Kashmir"</span> of India! 
+                        Take a boat ride to the three islands (Nehru Park has a zoo!), watch the 
+                        <span class="highlight">magical sunset</span> over the Aravalli Hills, and 
+                        enjoy street food at the embankment. The water-jet fountain lights up at night! 💦✨
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- DAY 2 -->
+        <div class="day-section">
+            <div class="day-header">⭐ DAY 2: MOUNTAINS & NATURE CALLING ⭐</div>
+            
+            <div class="activity-panel">
+                <div class="activity-card">
+                    <div class="time-badge">🌄 MORNING</div>
+                    <div class="activity-icon">🏰⛰️</div>
+                    <div class="activity-title">Monsoon Palace (Raita/Sajjangarh Fort)</div>
+                    <div class="activity-description">
+                        Climb 3,100 feet to this <span class="highlight">white marble wonder</span>! 
+                        Built in 1884 to watch monsoon clouds, it now offers <span class="highlight">360° views</span> 
+                        of ALL of Udaipur! Fun fact: This was in the James Bond movie "Octopussy"! 🎬
+                        <br><br>
+                        <strong>Wildlife Bonus:</strong> Spot tigers, deer, and exotic birds in the surrounding sanctuary! 🐅🦌
+                    </div>
+                </div>
+                
+                <div class="activity-card">
+                    <div class="time-badge">🏔️ AFTERNOON</div>
+                    <div class="activity-icon">🥾⛰️</div>
+                    <div class="activity-title">Bahubali Hills Trek</div>
+                    <div class="activity-description">
+                        Adventure time! Hike the <span class="highlight">Instagram-famous</span> Bahubali Hills! 
+                        Only 15-20 minutes of easy climbing (1,500 steps) leads to <span class="highlight">breathtaking 
+                        panoramas</span> of Badi Lake and the Aravalli ranges! 
+                        <br><br>
+                        📷 <strong>Perfect for:</strong> Sunset photos, nature vibes, and peaceful moments away from the city!
+                        <br>
+                        🍵 Tea and Maggi available at the top!
+                    </div>
+                </div>
+            </div>
+            
+            <div class="speech-bubble">
+                <strong>💡 Local's Secret:</strong> Visit Bahubali Hills early morning on a weekday to avoid crowds 
+                and get the BEST sunrise shots! The golden hour here is absolutely magical! ✨
+            </div>
+        </div>
+        
+        <!-- FOOD SECTION -->
+        <div class="food-section">
+            <div class="food-title">🍽️ FOODIE PARADISE GUIDE 🍽️</div>
+            
+            <div class="food-grid">
+                <div class="food-card">
+                    <div class="food-emoji">🌙⭐</div>
+                    <div class="food-name">DINNER</div>
+                    <div class="food-detail">
+                        <strong>Baro Masi</strong> - Rooftop tapas & cocktails with lake views<br>
+                        <strong>Khamma Ghani</strong> - Lakeside fine dining, romantic vibes 💕
+                    </div>
+                </div>
+                
+                <div class="food-card">
+                    <div class="food-emoji">🍛🥘</div>
+                    <div class="food-name">LUNCH</div>
+                    <div class="food-detail">
+                        <strong>Natraj</strong> - Unlimited Rajasthani thali! ₹230 only<br>
+                        8 veggies, dal, kadhi, sweets, rotis, pooris... ALL YOU CAN EAT! 🤤
+                        <br><strong>Plus:</strong> Find aesthetic cafes near City Palace!
+                    </div>
+                </div>
+                
+                <div class="food-card">
+                    <div class="food-emoji">☀️🥞</div>
+                    <div class="food-name">BREAKFAST</div>
+                    <div class="food-detail">
+                        <strong>Jain Nashta Center</strong> - Poha-Jalebi heaven! ₹20 only! 😍<br>
+                        <strong>Sun Moon Cafe</strong> - Rooftop breakfast with Lake Pichola views 🌅
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- TIPS SECTION -->
+        <div class="tip-box">
+            <div class="tip-title">🎒 ADVENTURE ESSENTIALS!</div>
+            <div class="tip-text">
+                ✅ Comfy walking shoes (lots of exploring!)<br>
+                ✅ Camera with extra storage (SO many photo ops!)<br>
+                ✅ Water bottle & sunscreen<br>
+                ✅ Light jacket for early mornings<br>
+                ✅ Cash for small vendors & entry fees<br>
+                ✅ Fully charged phone for navigation & photos!
+            </div>
+        </div>
+        
+        <div class="tip-box" style="background: #ff6b9d;">
+            <div class="tip-title" style="color: white;">🏨 WHERE TO STAY</div>
+            <div class="tip-text" style="color: white;">
+                <strong>Recommended:</strong> Hotel near Lake Pichola (based on your budget)<br>
+                <strong>Mentioned:</strong> Rana Pratap Hotel<br>
+                <strong>Best Areas:</strong> Gangaur Ghat, Ambrai Ghat, Chandpole - all close to action!
+            </div>
+        </div>
+        
+        <div class="speech-bubble" style="background: #ffd93d; border-color: #333;">
+            <strong style="font-size: 1.5em;">🚗 GETTING AROUND:</strong><br>
+            <span style="font-size: 1.1em;">
+                • Auto-rickshaw for city tours<br>
+                • Rent a bike (₹400-500/day) for Bahubali Hills<br>
+                • Old city best explored on foot!<br>
+                • Ola/Uber available but negotiate with autos for better rates!
+            </span>
+        </div>
+        
+        <!-- FINAL MESSAGE -->
+        <div style="text-align: center; margin-top: 30px; padding: 30px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 15px; border: 4px solid #333;">
+            <div style="font-size: 2.5em; color: white; margin-bottom: 15px; text-shadow: 3px 3px 0 rgba(0,0,0,0.3);">
+                🎉 HAVE AN EPIC UDAIPUR ADVENTURE! 🎉
+            </div>
+            <div style="font-size: 1.3em; color: white; text-shadow: 2px 2px 0 rgba(0,0,0,0.2);">
+                From majestic palaces to serene lakes, from royal feasts to hilltop views...<br>
+                This trip has it ALL! 🏰✨🏔️🍛<br>
+                <br>
+                <strong>KHAMMA GHANI!</strong> (Welcome in Rajasthani!) 🙏<br>
+                <br>
+                📅 Trip starts: December 13th<br>
+                🎯 Mission: Make unforgettable memories!
+            </div>
+        </div>
+    </div>
+</body>
+</html>
